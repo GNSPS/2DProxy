@@ -7,7 +7,7 @@ This is a successor of the very well known delegate call proxy pattern in the EV
 
 2DProxy (coming from doing 2 delegate calls, one at deploy time another at runtime 😄) was created with the idea to eliminate the pattern of having to ditch the constructor (and its associated EVM security assurances) and building your own initializing functions with user-set conditions to only run once (v. https://github.com/gnosis/safe-contracts/blob/master/contracts/OwnerManager.sol#L23 ).
 
-This work is all still very rough. Including the horrible bash script, I wrote to separate the constructor and runtime parts of a bytecode file resulting from compiling a Solidity file.
+This work is all still very rough. Including the horrible bash script I wrote to separate the constructor and runtime parts of a bytecode file resulting from compiling a Solidity file.
 
 ## How does it work?
 
@@ -16,7 +16,9 @@ The proxy `delegatecall`'s a previously deployed "constructor master copy" at de
 Might be easier with an image. 😄
 
 <img src="https://user-images.githubusercontent.com/4008213/44305243-ae3e9d00-a36a-11e8-9871-87e303d83fb6.png">
+
 *Legend*: LC there means "Large Contract"
+
 
 The way I am dividing a compiled Solidity contract is, very simply, by finding the first occurrence of these two bytes `f300` (`0xf3` being **RETURN** and `0x00` being **STOP**) and then considering the part before (including these bytes) the constructor bytecode and the part after the runtime bytecode. I then prepend a small constructor to each one of these to make them independently deployable to the chain.
 
@@ -31,7 +33,7 @@ The reason why, in its current form, the 2DProxy can't handle constructors with 
 To paint a clearer picture:
 
 In a create transaction, the code that is passed through the call data is run (this is deploy time) and whatever is returned from the execution of that bytecode is what gets deployed to the blockchain (the runtime bytecode).
-The way parameters are passed onto a constructor (deploy time execution) is by being appended to the bytecode, at the very end, ABI encoded and then `codecopy`ed into memory.
+The way parameters are passed onto a constructor is by appending them to the bytecode, at the very end, ABI-encoded and then `codecopy`ed into memory.
 
 Since we have to deploy the constructor bytecode to the blockchain beforehand it is impossible for us, with the method described, to call it with parameters. **When the code tries to `codecopy`** the parameters from the relevant code positions **only zeros are returned since there is nothing over there**! 😂
 
@@ -60,7 +62,7 @@ So do this:
 npm uninstall -g truffle && npm install -g truffle@next 
 ```
 
-If you just want to test the 2DProxy on a contract of your own without hacking that much and getting these artifacts deployed automagically just duplicate the file you want proxied and rename the copy to `2DTarget.sol`. 😄
+If you just want to test the 2DProxy on a contract of your own without hacking that much and getting these artifacts deployed automagically just duplicate the file you want proxied into `contracts/2dproxy/` and two artifacts will be created automatically for you: `<contract_name>_ctor.json` and `<contract_name>_runtime.json` which can then be imported normally into Truffle deployments/tests like `const <contract_name>_ctor = artifacts.require("<contract_name>_ctor");`. 😄
 
 And then run:
 
