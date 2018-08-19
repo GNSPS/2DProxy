@@ -1,0 +1,14 @@
+{
+  "name": "2dproxy",
+  "description": "2DProxy, the two delegate calls proxy",
+  "version": "0.0.1",
+  "author": "GNSPS",
+  "repository": "GNSPS/2DProxy",
+  "license": "GPL-3.0",
+  "scripts": {
+    "prepare": "./2dproxy_bin/2dproxy_extractor.sh \"2dproxy_build/\" -s ",
+    "prepare:optimized": "./2dproxy_bin/2dproxy_extractor.sh \"2dproxy_build/\" -s -o ",
+    "test": ""
+  },
+  "dependencies": {}
+}
