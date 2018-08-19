@@ -71,6 +71,12 @@ truffle compile
 truffle migrate 
 ```
 
+Or run the tests with:
+
+```
+truffle test
+```
+
 Two artifacts will then be created for you: `<contract_name>_ctor.json` and `<contract_name>_runtime.json` which can then be imported normally into Truffle deployments/tests like `const <contract_name>_ctor = artifacts.require("<contract_name>_ctor");`. 😄
 
 -----
