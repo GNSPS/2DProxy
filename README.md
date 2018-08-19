@@ -15,7 +15,7 @@ The proxy `delegatecall`'s a previously deployed "constructor master copy" at de
 
 Might be easier with an image. 😄
 
-<img src="https://user-images.githubusercontent.com/23033765/43811687-cbb312f4-9a8b-11e8-9d8e-98be09fcd2d4.png">
+<img src="https://user-images.githubusercontent.com/4008213/44305243-ae3e9d00-a36a-11e8-9871-87e303d83fb6.png">
 
 The way I am dividing a compiled Solidity contract is, very simply, by finding the first occurrence of these two bytes `f300` (`0xf3` being **RETURN** and `0x00` being **STOP**) and then considering the part before (including these bytes) the constructor bytecode and the part after the runtime bytecode. I then prepend a small constructor to each one of these to make them independently deployable to the chain.
 
