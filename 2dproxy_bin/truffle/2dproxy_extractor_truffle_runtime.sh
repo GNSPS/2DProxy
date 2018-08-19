@@ -53,6 +53,8 @@ solc -o ./ --overwrite --optimize --bin "$filepath"
 
 orig_bytecode=$(cat "${target_contract_name%.*}.bin")
 
+rm "${target_contract_name%.*}.bin"
+
 orig_bytecode_size=${#orig_bytecode}
 
 if (( $orig_bytecode_size % 2 != 0 ))
