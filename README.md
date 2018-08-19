@@ -62,7 +62,7 @@ So do this:
 npm uninstall -g truffle && npm install -g truffle@next 
 ```
 
-If you just want to test the 2DProxy on a contract of your own without hacking that much and getting these artifacts deployed automagically just duplicate the file you want proxied into `contracts/2dproxy/` and two artifacts will be created automatically for you: `<contract_name>_ctor.json` and `<contract_name>_runtime.json` which can then be imported normally into Truffle deployments/tests like `const <contract_name>_ctor = artifacts.require("<contract_name>_ctor");`. 😄
+If you just want to test the 2DProxy on a contract of your own without hacking that much and getting these artifacts deployed automagically just duplicate the file you want proxied into `contracts/2dproxy/`.
 
 And then run:
 
@@ -70,6 +70,8 @@ And then run:
 truffle compile
 truffle migrate 
 ```
+
+Two artifacts will then be created for you: `<contract_name>_ctor.json` and `<contract_name>_runtime.json` which can then be imported normally into Truffle deployments/tests like `const <contract_name>_ctor = artifacts.require("<contract_name>_ctor");`. 😄
 
 -----
 
