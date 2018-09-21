@@ -70,7 +70,7 @@ fi
 # Constructor bytecode extraction part
 # 
 
-extracted_ctor=$(echo "$orig_bytecode" | sed 's/\(f300\)\(.*\)/\1/')
+extracted_ctor=$(echo "$orig_bytecode" | sed -E 's/(f300|f3fe)(.*)/\1/')
 
 extracted_ctor_size=${#extracted_ctor}
 
